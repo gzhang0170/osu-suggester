@@ -42,7 +42,14 @@ export default function Home() {
         <ul className="mt-4 space-y-1">
           {results.map((mapId) => (
             <li key={mapId} className="text-lg font-mono">
-              {mapId}
+              <a
+                href={`https://osu.ppy.sh/b/${mapId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                {mapId}
+              </a>
             </li>
           ))}
         </ul>
