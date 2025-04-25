@@ -8,14 +8,20 @@ module.exports = {
       },
     ];
   },
+};
 
-  outputFileTracingExcludes: {
-    "api/**": [
+const nextConfig = {
+  experimental: {
+    outputFileTracingExcludes: {
+      "api/**": [
         '.next',
         '.cache',
         'node_modules',
         'public',
         'app',
       ],
+    },
   },
 };
+
+module.exports = nextConfig;
