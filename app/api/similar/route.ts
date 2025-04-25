@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     }
 
     const flaskRes = await fetch(
-        `http://127.0.0.1:5328/api/similar?beatmap_id=${encodeURIComponent(beatmapId)}`
+        `https://osu-suggester-api.onrender.com/api/similar?beatmap_id=${beatmapId}`
     );
     const data = await flaskRes.json();
     return NextResponse.json(data, { status: flaskRes.status });
