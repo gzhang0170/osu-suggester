@@ -1,7 +1,7 @@
 import rosu_pp_py as rosu
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import euclidean_distances
-import numpy as np
+from numpy import load, argsort
 import os
 
 class ArrayFuncs:
@@ -15,7 +15,7 @@ class ArrayFuncs:
                 raise FileNotFoundError(f"Error: The file '{filename}' does not exist.")
 
             # Load the array
-            array = np.load(filename, allow_pickle=True)  # Pickle: prevents loading arbitrary objects
+            array = load(filename, allow_pickle=True)  # Pickle: prevents loading arbitrary objects
 
             # print(f"Successfully loaded '{filename}'. Shape: {array.shape}, Dtype: {array.dtype}")
             return array
@@ -133,7 +133,7 @@ class ArrayFuncs:
         distances = euclidean_distances(data_table, ref_map).flatten()
 
         # Get closest indices (excluding itself)
-        sorted_indices = np.argsort(distances)[1:top_n+1] 
+        sorted_indices = argsort(distances)[1:top_n+1] 
         
         return sorted_indices, distances[sorted_indices]
 

@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import where, array, argmin
 import os
 from api.src.array_funcs import ArrayFuncs
 
@@ -11,21 +11,21 @@ def get_similar_maps(beatmap_id):
 
     # Get cached tables and load them into tables
     current_directory = os.getcwd()
-    map_table_filename = os.path.join(current_directory, "api", "src", "tables", "map_table_all.npy")
-    data_table_filename = os.path.join(current_directory, "api", "src", "tables", "data_table_all.npy")
+    map_table_filename = os.path.join(current_directory, "public", "tables", "map_table_all.npy")
+    data_table_filename = os.path.join(current_directory, "public", "tables", "data_table_all.npy")
     map_table = af.load_numpy_array(map_table_filename)
     data_table = af.load_numpy_array(data_table_filename)
 
     # Get index of the current map in the table
-    ref_index = np.where(map_table[:, 0] == beatmap_id)[0][0]
+    ref_index = where(map_table[:, 0] == beatmap_id)[0][0]
     bpm = data_table[ref_index][1]
 
     # Determine a "normalized" BPM compared to the current map
     # NOTE: This is only based on halved/doubled BPMS or similar.
     #       Not sure of a better way to implement this, especially for maps with different time signatures (ex. 1/3)
     for data_stats in data_table:
-        bpms = np.array([data_stats[1] / 4, data_stats[1] / 2, data_stats[1], data_stats[1] * 2, data_stats[1] * 4])
-        i = np.argmin(np.abs(bpms - bpm))
+        bpms = array([data_stats[1] / 4, data_stats[1] / 2, data_stats[1], data_stats[1] * 2, data_stats[1] * 4])
+        i = argmin(abs(bpms - bpm))
         stdized_bpm = bpms[i]
         data_stats[1] = stdized_bpm
 
