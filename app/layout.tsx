@@ -1,5 +1,6 @@
 import './globals.css'
 import { Roboto_Mono } from "next/font/google";
+import InfoBox from "./components/InfoBox";
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] })
 
@@ -14,8 +15,25 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={robotoMono.className}>{children}</body>
+    <html lang="en" className={robotoMono.className}>
+      <body className="relative">
+        {children}
+
+        <InfoBox
+          infoText={
+            "Requirements:\n" +
+            "• The map must have a leaderboard (ranked, loved, or approved) before May 1, 2025\n"+
+            "• Only returns maps with leaderboards\n\n" +
+            "Known inaccuracies:\n" +
+            "• Rhythmly complex maps (ex. polyrhythm)\n" +
+            "• Differentiating comfortable aim (sharp angles) from uncomfortable aim (wide angles)\n" +
+            "• Maps below Hard difficulties (around 3 stars and below)\n" +
+            "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n\n" +
+            "Check back for updates! I'm currently working on a better UI, this is currently just a skeleton layout " +
+            "that I've deployed to get some playtesting with."
+          }
+        />
+      </body>
     </html>
   )
 }

@@ -77,7 +77,7 @@ export default function Home() {
               <th className="px-2 py-1">BPM</th>
               <th className="px-4 py-1">Plays</th>
               <th className="px-2 py-1">Last Updated</th>
-              <th className="px-2 py-1">Distance</th>
+              <th className="px-2 py-1">Similarity</th>
             </tr>
           </thead>
           <tbody>
