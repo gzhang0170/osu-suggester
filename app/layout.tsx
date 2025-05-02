@@ -27,6 +27,7 @@ export default function RootLayout({
             "• Only returns maps with leaderboards\n\n" +
             "Known inaccuracies:\n" +
             "• Rhythmly complex maps (ex. polyrhythm)\n" +
+            "• Gimmickier maps (ex. low AR, precision)\n" +
             "• Differentiating comfortable aim (sharp angles) from uncomfortable aim (wide angles)\n" +
             "• Maps below Hard difficulties (around 3 stars and below)\n" +
             "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n\n" +
