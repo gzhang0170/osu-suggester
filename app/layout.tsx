@@ -1,6 +1,7 @@
 import './globals.css'
 import { Roboto_Mono } from "next/font/google";
 import InfoBox from "./components/InfoBox";
+import SocialBar from "./components/SocialBar";
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] })
 
@@ -33,6 +34,8 @@ export default function RootLayout({
             "that I've deployed to get some playtesting with."
           }
         />
+
+        <SocialBar />
       </body>
     </html>
   )
