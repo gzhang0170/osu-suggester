@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { SiOsu } from "react-icons/si";
+import type { IconBaseProps } from "react-icons/lib";
+
+const DiscordIcon = FaDiscord as unknown as React.FC<IconBaseProps>;
+const TwitterIcon = FaTwitter as unknown as React.FC<IconBaseProps>;
+const OsuIcon = SiOsu as unknown as React.FC<IconBaseProps>;
 
 export default function SocialBar() {
   const [copied, setCopied] = useState(false);
@@ -25,7 +30,7 @@ export default function SocialBar() {
           onClick={copyDiscord}
           className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
         >
-          <FaDiscord size={24} />
+          <DiscordIcon size={24} />
           {copied ? "Copied!" : discordName}
         </button>
         <a
@@ -34,7 +39,7 @@ export default function SocialBar() {
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
         >
-          <FaTwitter size={24} />
+          <TwitterIcon size={24} />
           @atomicknighto
         </a>
         <a
@@ -43,7 +48,7 @@ export default function SocialBar() {
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
         >
-          <SiOsu size={24} />
+          <OsuIcon size={24} />
           yukinasimp
         </a>
       </div>
