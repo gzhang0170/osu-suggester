@@ -34,9 +34,15 @@ export default function Home() {
   const [results, setResults] = useState<Beatmap[] | null>(null);
   const [error, setError] = useState("");
 
+  const [showReport, setShowReport] = useState(false);
+  const [reportText, setReportText] = useState("");
+
   const handleSearch = async () => {
     setError("");
     setResults(null);
+    setShowReport(false);
+    setReportText("");
+
     const m = input.match(/(\d+)(?!.*\d)/);
     const id = m ? m[1] : input.trim();
     if (!id) return setError("Enter a beatmap ID or link");
@@ -51,6 +57,27 @@ export default function Home() {
     }
   };
 
+  const submitReport = async () => {
+      if (!results) return;
+      try {
+        const res = await fetch("/api/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            beatmap_id: input.match(/(\d+)(?!.*\d)/)?.[1] ?? input.trim(),
+            suggestions: results,
+            comment: reportText,
+          }),
+        });
+        if (!res.ok) throw new Error(await res.text());
+        alert("Report submitted—thank you!");
+        setShowReport(false);
+        setReportText("");
+      } catch (e: any) {
+        alert("Error submitting report: " + e.message);
+      }
+    };
+
   return (
     <main className="flex flex-col items-center gap-4 p-6">
       <h1 className="text-2xl font-bold">osu!suggester</h1>
@@ -64,7 +91,35 @@ export default function Home() {
         <button className="bg-blue-600 text-white px-4 rounded" onClick={handleSearch}>
           Search
         </button>
+        {results && (
+          <button
+            className="bg-gray-600 text-white px-4 rounded"
+            onClick={() => setShowReport((v) => !v)}
+          >
+            {showReport ? "Cancel" : "Report"}
+          </button>
+        )}
       </div>
+
+      {showReport && (
+        <div className="w-full max-w-md mt-2">
+          <textarea
+            className="w-full border rounded px-3 py-2 text-black"
+            rows={4}
+            placeholder="What's wrong with these suggestions? (too much aim, speed, streams, etc.)"
+            value={reportText}
+            onChange={(e) => setReportText(e.target.value)}
+          />
+          <button
+            className="mt-2 bg-red-600 text-white px-4 py-2 rounded"
+            onClick={submitReport}
+            disabled={!reportText.trim()}
+          >
+            Submit Report
+          </button>
+        </div>
+      )}
+
       {error && <p className="text-red-500">{error}</p>}
       {results && (
         <table className="mt-4 text-sm border-collapse text-center">

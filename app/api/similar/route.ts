@@ -6,8 +6,8 @@ export const GET = withRateLimit({
     limit: 10,
     windowMs: 60_000,
     handler: () =>
-      new NextResponse("Too Many Requests", { status: 429 }),
-  }) (async (request: Request) => {
+        new NextResponse("Too many requests; maximum is 10 per minute", { status: 429 }),
+})(async (request: Request) => {
     const { searchParams } = new URL(request.url);
     const beatmapId = searchParams.get("beatmap_id");
     if (!beatmapId) {

@@ -23,7 +23,7 @@ export default function InfoBox({ infoText }: InfoBoxProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="absolute bottom-full left-0 mb-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-xl w-96 whitespace-pre-wrap"
+            className="absolute bottom-full left-0 mb-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-xl w-[32rem] whitespace-pre-wrap text-sm"
           >
             {infoText}
           </motion.div>
