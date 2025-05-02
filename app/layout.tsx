@@ -7,7 +7,7 @@ const robotoMono = Roboto_Mono({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'osu!suggester',
-  description: 'Find similar osu! beatmaps',
+  description: 'Find similar osu! beatmaps'
 }
 
 export default function RootLayout({
