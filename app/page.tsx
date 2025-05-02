@@ -35,6 +35,7 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const [showReport, setShowReport] = useState(false);
+  const [alternativeMaps, setAlternativeMaps] = useState(""); 
   const [reportText, setReportText] = useState("");
 
   const handleSearch = async () => {
@@ -67,12 +68,14 @@ export default function Home() {
             beatmap_id: input.match(/(\d+)(?!.*\d)/)?.[1] ?? input.trim(),
             suggestions: results,
             comment: reportText,
+            alternative_maps: alternativeMaps
           }),
         });
         if (!res.ok) throw new Error(await res.text());
         alert("Report submitted—thank you!");
         setShowReport(false);
         setReportText("");
+        setAlternativeMaps("");
       } catch (e: any) {
         alert("Error submitting report: " + e.message);
       }
@@ -109,6 +112,13 @@ export default function Home() {
             placeholder="What's wrong with these suggestions? (too much aim, speed, streams, etc.)"
             value={reportText}
             onChange={(e) => setReportText(e.target.value)}
+          />
+          <input
+            type="text"
+            className="w-full border rounded px-3 py-2 text-black"
+            placeholder="Example of better map(s) (ID or URL)"
+            value={alternativeMaps}
+            onChange={(e) => setAlternativeMaps(e.target.value)}
           />
           <button
             className="mt-2 bg-red-600 text-white px-4 py-2 rounded"

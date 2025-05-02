@@ -12,17 +12,24 @@ export const POST = withRateLimit({
         new NextResponse("Too many requests; maximum is 1 per 30 seconds", { status: 429 }),
 })(async (request: Request) => {
     try {
-        const { beatmap_id, suggestions, comment } = (await request.json()) as {
+        const {
+            beatmap_id,
+            suggestions,
+            comment,
+            alternative_maps,
+        } = (await request.json()) as {
             beatmap_id: string;
             suggestions: number[];
             comment: string;
+            alternative_maps: string;
         };
 
         await sql`
-        INSERT INTO reports (beatmap_id, suggestions, comment, created_at)
+        INSERT INTO reports (beatmap_id, suggestions, alternative_maps, comment, created_at)
         VALUES (
           ${beatmap_id},
           ${JSON.stringify(suggestions)}::jsonb,
+          ${alternative_maps},
           ${comment},
           now()
         )
