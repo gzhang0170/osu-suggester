@@ -29,7 +29,7 @@ export default function RootLayout({
             "• Rhythmly complex maps (ex. polyrhythm)\n" +
             "• Gimmickier maps (ex. low AR, precision)\n" +
             "• Differentiating comfortable aim (sharp angles) from uncomfortable aim (wide angles)\n" +
-            "• Maps below Hard difficulties (around 3 stars and below)\n" +
+            "• Maps below 4.0 stars and above 7.5 stars\n" +
             "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n\n" +
             "Check back for updates! I'm currently working on a better UI, this is currently just a skeleton layout " +
             "that I've deployed to get some playtesting with."

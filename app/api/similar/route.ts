@@ -1,6 +1,13 @@
+import { withRateLimit } from "next-limitr";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export const GET = withRateLimit({
+    // Maximum 10 requests per minute
+    limit: 10,
+    windowMs: 60_000,
+    handler: () =>
+      new NextResponse("Too Many Requests", { status: 429 }),
+  }) (async (request: Request) => {
     const { searchParams } = new URL(request.url);
     const beatmapId = searchParams.get("beatmap_id");
     if (!beatmapId) {
@@ -12,4 +19,4 @@ export async function GET(request: Request) {
     );
     const data = await flaskRes.json();
     return NextResponse.json(data, { status: flaskRes.status });
-}
+});

@@ -2,20 +2,24 @@
 import { useState } from "react";
 
 type Beatmap = {
-  beatmap_id: number;
-  user_id: number;
-  filename: string;
+  id: number;
+  url: string;
+  card: string;
+  artist: string;
+  title: string;
   version: string;
+  creator: string;
+  difficulty_rating: number;
   total_length: number;
   hit_length: number;
-  diff_drain: number;
-  diff_size: number;
-  diff_overall: number;
-  diff_approach: number;
-  last_update: string;
-  difficultyrating: number;
-  playcount: number;
+  cs: number;
+  drain: number;
+  accuracy: number;
+  ar: number;
   bpm: number;
+  playcount: number;
+  status: string;
+  ranked_date: string;
   distance: number;
 };
 
@@ -67,7 +71,9 @@ export default function Home() {
           <thead className="font-semibold">
             <tr>
               <th className="px-2 py-1">ID</th>
+              <th className="px-2 py-1">Song</th>
               <th className="px-2 py-1">Difficulty</th>
+              <th className="px-2 py-1">Mapper</th>
               <th className="px-2 py-1">Length (Drain)</th>
               <th className="px-4 py-1">CS</th>
               <th className="px-4 py-1">HP</th>
@@ -76,33 +82,35 @@ export default function Home() {
               <th className="px-4 py-1">Stars</th>
               <th className="px-2 py-1">BPM</th>
               <th className="px-4 py-1">Plays</th>
-              <th className="px-2 py-1">Last Updated</th>
+              <th className="px-2 py-1">Ranked Date</th>
               <th className="px-2 py-1">Similarity</th>
             </tr>
           </thead>
           <tbody>
             {results.map(bm => (
-              <tr key={bm.beatmap_id} className="border-t">
+              <tr key={bm.id} className="border-t">
                 <td>
                   <a
-                    href={`https://osu.ppy.sh/b/${bm.beatmap_id}`}
+                    href={bm.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 underline"
                   >
-                    {bm.beatmap_id}
+                    {bm.id}
                   </a>
                 </td>
+                <td>{bm.artist} - {bm.title}</td>
                 <td>{bm.version}</td>
+                <td>{bm.creator}</td>
                 <td>{formatLength(bm.total_length)} ({formatLength(bm.hit_length)})</td>
-                <td>{bm.diff_size.toFixed(1)}</td>
-                <td>{bm.diff_drain.toFixed(1)}</td>
-                <td>{bm.diff_overall.toFixed(1)}</td>
-                <td>{bm.diff_approach.toFixed(1)}</td>
-                <td>{bm.difficultyrating.toFixed(2)}</td>
+                <td>{bm.cs.toFixed(1)}</td>
+                <td>{bm.drain.toFixed(1)}</td>
+                <td>{bm.accuracy.toFixed(1)}</td>
+                <td>{bm.ar.toFixed(1)}</td>
+                <td>{bm.difficulty_rating.toFixed(2)}</td>
                 <td>{bm.bpm.toFixed(0)}</td>
                 <td>{bm.playcount.toLocaleString()}</td>
-                <td className="px-2 py-1">{new Date(bm.last_update).toLocaleDateString()}</td>
+                <td className="px-2 py-1">{new Date(bm.ranked_date).toLocaleDateString()}</td>
                 <td>{bm.distance.toFixed(2)}</td>
               </tr>
             ))}
