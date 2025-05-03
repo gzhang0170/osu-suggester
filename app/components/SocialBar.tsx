@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { FaDiscord, FaTwitter, FaGithub } from "react-icons/fa";
 import { SiOsu } from "react-icons/si";
+import type { IconBaseProps } from "react-icons/lib";
+
+const DiscordIcon = FaDiscord as unknown as React.FC<IconBaseProps>;
+const TwitterIcon = FaTwitter as unknown as React.FC<IconBaseProps>;
+const GithubIcon = FaGithub as unknown as React.FC<IconBaseProps>;
+const OsuIcon = SiOsu as unknown as React.FC<IconBaseProps>;
 
 export default function SocialBar() {
   const discordHandle = "atomicknighto";
@@ -23,13 +29,13 @@ export default function SocialBar() {
 
   const socials = [
     {
-      Icon: FaDiscord,
+      Icon: DiscordIcon,
       onClick: copyDiscord,
       tooltip: copied ? "Copied!" : discordHandle,
     },
-    { Icon: FaTwitter, url: twitterUrl, tooltip: twitterHandle },
-    { Icon: SiOsu, url: osuUrl, tooltip: osuUsername },
-    { Icon: FaGithub, url: githubUrl, tooltip: githubHandle },
+    { Icon: TwitterIcon, url: twitterUrl, tooltip: twitterHandle },
+    { Icon: OsuIcon, url: osuUrl, tooltip: osuUsername },
+    { Icon: GithubIcon, url: githubUrl, tooltip: githubHandle },
   ];
 
   return (
