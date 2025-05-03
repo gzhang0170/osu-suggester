@@ -65,6 +65,7 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<Beatmap[] | null>(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [showReport, setShowReport] = useState(false);
   const [alternativeMaps, setAlternativeMaps] = useState("");
@@ -75,6 +76,7 @@ export default function Home() {
     setResults(null);
     setShowReport(false);
     setReportText("");
+    setLoading(true); 
 
     const m = input.match(/(\d+)(?!.*\d)/);
     const id = m ? m[1] : input.trim();
@@ -87,6 +89,8 @@ export default function Home() {
       setResults(json.similar);
     } catch (e: any) {
       setError(e.message || "Failed to fetch");
+    } finally {
+        setLoading(false);
     }
   };
 
@@ -122,12 +126,16 @@ export default function Home() {
           placeholder="beatmap ID or link"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          disabled={loading}
         />
         <button
-          className="bg-blue-600 text-white px-4 rounded"
+          className={`px-4 rounded ${loading 
+            ? "bg-gray-400 cursor-not-allowed" 
+            : "bg-blue-600 hover:bg-blue-700"} text-white`}
           onClick={handleSearch}
+          disabled={loading}
         >
-          Search
+          {loading ? "Searching…" : "Search"}
         </button>
         {results && (
           <button
@@ -139,6 +147,7 @@ export default function Home() {
         )}
       </div>
 
+    
       {showReport && (
         <div className="w-full max-w-md mt-2">
           <textarea
@@ -162,6 +171,22 @@ export default function Home() {
           >
             Submit Report
           </button>
+        </div>
+      )}
+
+      {loading && (
+        <div className="mt-4">
+          <div
+            className="
+              mx-auto
+              w-8 h-8
+              border-4 border-blue-600
+              border-t-transparent
+              rounded-full
+              animate-spin
+            "
+            aria-label="Loading"
+          />
         </div>
       )}
 
