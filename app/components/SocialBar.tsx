@@ -1,57 +1,78 @@
 "use client";
 
 import { useState } from "react";
-import { FaDiscord, FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaTwitter, FaGithub } from "react-icons/fa";
 import { SiOsu } from "react-icons/si";
-import type { IconBaseProps } from "react-icons/lib";
-
-const DiscordIcon = FaDiscord as unknown as React.FC<IconBaseProps>;
-const TwitterIcon = FaTwitter as unknown as React.FC<IconBaseProps>;
-const OsuIcon = SiOsu as unknown as React.FC<IconBaseProps>;
 
 export default function SocialBar() {
-  const [copied, setCopied] = useState(false);
-  const discordName = "atomicknighto";
+  const discordHandle = "atomicknighto";
+  const twitterUrl = "https://x.com/atomicknighto";
+  const twitterHandle = "@atomicknighto";
+  const osuUrl = "https://osu.ppy.sh/users/10937890";
+  const osuUsername = "yukinasimp";
+  const githubUrl = "";
+  const githubHandle = "coming soon!";
 
-  const copyDiscord = async () => {
-    try {
-      await navigator.clipboard.writeText(discordName);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (e) {
-      console.error("Clipboard copy failed", e);
-    }
+  const [copied, setCopied] = useState(false);
+
+  const copyDiscord = () => {
+    navigator.clipboard.writeText(discordHandle);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
+  const socials = [
+    {
+      Icon: FaDiscord,
+      onClick: copyDiscord,
+      tooltip: copied ? "Copied!" : discordHandle,
+    },
+    { Icon: FaTwitter, url: twitterUrl, tooltip: twitterHandle },
+    { Icon: SiOsu, url: osuUrl, tooltip: osuUsername },
+    { Icon: FaGithub, url: githubUrl, tooltip: githubHandle },
+  ];
+
   return (
-    <div className="fixed bottom-0 w-full flex justify-center mb-4 pointer-events-auto">
-      <div className="flex gap-6 bg-white dark:bg-gray-800 bg-opacity-75 dark:bg-opacity-75 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-        <button
-          onClick={copyDiscord}
-          className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
-        >
-          <DiscordIcon size={24} />
-          {copied ? "Copied!" : discordName}
-        </button>
-        <a
-          href="https://twitter.com/atomicknighto"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
-        >
-          <TwitterIcon size={24} />
-          @atomicknighto
-        </a>
-        <a
-          href="https://osu.ppy.sh/users/10937890"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-gray-800 dark:text-gray-100 hover:text-blue-500"
-        >
-          <OsuIcon size={24} />
-          yukinasimp
-        </a>
-      </div>
+    <div
+      className="
+            fixed bottom-4 left-1/2 transform -translate-x-1/2
+            bg-gray-700 bg-opacity-50 backdrop-blur-sm
+            rounded-full px-4 h-10 flex items-center space-x-3
+            z-50
+          "
+    >
+      {socials.map(({ Icon, url, onClick, tooltip }) => (
+        <div key={tooltip} className="relative group">
+          {url ? (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-6 h-6 text-white hover:text-gray-200"
+            >
+              <Icon className="w-full h-full" />
+            </a>
+          ) : (
+            <button
+              onClick={onClick}
+              className="flex items-center justify-center w-6 h-6 text-white hover:text-gray-200"
+            >
+              <Icon className="w-full h-full" />
+            </button>
+          )}
+          {/* tooltip */}
+          <div
+            className="
+                  pointer-events-none
+                  absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1
+                  whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white
+                  opacity-0 group-hover:opacity-100 transition-opacity
+                "
+          >
+            {tooltip}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

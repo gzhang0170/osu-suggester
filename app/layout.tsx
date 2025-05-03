@@ -1,19 +1,19 @@
-import './globals.css'
+import "./globals.css";
 import { Roboto_Mono } from "next/font/google";
 import InfoBox from "./components/InfoBox";
 import SocialBar from "./components/SocialBar";
 
-const robotoMono = Roboto_Mono({ subsets: ['latin'] })
+const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'osu!suggester',
-  description: 'Find similar osu! beatmaps'
-}
+  title: "osu!suggester",
+  description: "Find similar osu! beatmaps",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={robotoMono.className}>
@@ -31,7 +31,7 @@ export default function RootLayout({
             "• 60-70: Slightly similar\n" +
             "• Below 60: Not similar\n\n" +
             "Search requirements:\n" +
-            "• The map must have a leaderboard (ranked, loved, or approved) before May 1, 2025\n"+
+            "• The map must have a leaderboard (ranked, loved, or approved) before May 1, 2025\n" +
             "• Only returns maps with leaderboards\n\n" +
             "Known inaccuracies:\n" +
             "• Rhythmly complex maps (ex. polyrhythm)\n" +
@@ -49,5 +49,5 @@ export default function RootLayout({
         <SocialBar />
       </body>
     </html>
-  )
+  );
 }
