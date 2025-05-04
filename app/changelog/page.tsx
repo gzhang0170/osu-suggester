@@ -12,7 +12,8 @@ const entries = [
       "Implemented search protection and loading when searching a map",
       "Added DT/HT and HR/EZ mod toggles to search bar",
       "Added a maintenance page for when the API is down or needs reworking",
-      "Added changelog page to record changes to the website and API"
+      "Added changelog page to record changes to the website and API",
+      "Implemented DT searching and suggestions"
     ],
   },
   {

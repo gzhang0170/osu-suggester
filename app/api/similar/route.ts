@@ -16,8 +16,13 @@ export const GET = withRateLimit({
     return NextResponse.json({ error: "Missing beatmap_id" }, { status: 400 });
   }
 
+  const mods = searchParams.get("mods");
+  if (!mods) {
+    return NextResponse.json({ error: "Missing mods" }, { status: 400 });
+  }
+
   const flaskRes = await fetch(
-    `https://osu-suggester-api.onrender.com/api/similar?beatmap_id=${beatmapId}`
+    `https://osu-suggester-api.onrender.com/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
   );
   const data = await flaskRes.json();
   return NextResponse.json(data, { status: flaskRes.status });

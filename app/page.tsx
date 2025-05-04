@@ -17,6 +17,7 @@ type Beatmap = {
   title: string;
   version: string;
   creator: string;
+  mods: string;
   difficulty_rating: number;
   total_length: number;
   hit_length: number;
@@ -35,6 +36,28 @@ function formatLength(sec: number): string {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function getModColor(mods: string) {
+  const hasDT = mods.includes("DT");
+  const hasHT = mods.includes("HT");
+  const hasHR = mods.includes("HR");
+  const hasEZ = mods.includes("EZ");
+
+  const group1 = hasDT || hasHT;
+  const group2 = hasHR || hasEZ;
+
+  if (group1 && group2) {
+    return "text-amber-400";
+  }
+  if (group1) {
+    return hasDT ? "text-orange-400" : "text-blue-400";
+  }
+  if (group2) {
+    return hasHR ? "text-red-400" : "text-green-400";
+  }
+
+  return "text-white";
 }
 
 type StatusIconProps = {
@@ -240,7 +263,7 @@ export default function Home() {
 
       {error && <p className="text-red-500">{error}</p>}
       {results && (
-        <table className="mt-4 text-sm border-collapse text-center">
+        <table className="text-sm border-collapse text-center">
           <thead className="font-semibold">
             <tr>
               <th className="px-2 py-1">Map</th>
@@ -254,16 +277,19 @@ export default function Home() {
               <th className="px-4 py-1">AR</th>
               <th className="px-4 py-1">Stars</th>
               <th className="px-2 py-1">BPM</th>
-              <th className="px-4 py-1">Plays</th>
-              <th className="px-2 py-1">Ranked Date</th>
+              {/* <th className="px-4 py-1">Plays</th>
+              <th className="px-2 py-1">Ranked Date</th> */}
               <th className="px-2 py-1">Similarity</th>
               <th className="px-2 py-1">Status</th>
             </tr>
           </thead>
           <tbody>
-            {results.map((bm) => (
-              <tr key={bm.id} className="border-t">
-                {/* <td>
+            {results?.map((bm) => {
+              const color = getModColor(bm.mods);
+              const isGroup2 = bm.mods.includes("HR") || bm.mods.includes("EZ");
+              return (
+                <tr key={bm.id} className="border-t">
+                  {/* <td>
                   <a
                     href={bm.url}
                     target="_blank"
@@ -273,45 +299,59 @@ export default function Home() {
                     {bm.id}
                   </a>
                 </td> */}
-                <td className="px-2 py-1">
-                  <a
-                    href={bm.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-16 h-10 overflow-hidden rounded-md"
-                  >
-                    <img
-                      src={bm.card}
-                      alt={`${bm.artist} — ${bm.title}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </a>
-                </td>
-                <td>
-                  {bm.artist} - {bm.title}
-                </td>
-                <td>{bm.version}</td>
-                <td>{bm.creator}</td>
-                <td>
-                  {formatLength(bm.total_length)} ({formatLength(bm.hit_length)}
-                  )
-                </td>
-                <td>{bm.cs.toFixed(1)}</td>
-                <td>{bm.drain.toFixed(1)}</td>
-                <td>{bm.accuracy.toFixed(1)}</td>
-                <td>{bm.ar.toFixed(1)}</td>
-                <td>{bm.difficulty_rating.toFixed(2)}</td>
-                <td>{bm.bpm.toFixed(0)}</td>
-                <td>{bm.playcount.toLocaleString()}</td>
-                <td className="px-2 py-1">
-                  {new Date(bm.ranked_date).toLocaleDateString()}
-                </td>
-                <td>{bm.distance.toFixed(2)}</td>
-                <td className="px-2 py-1">
-                  <StatusIcon status={bm.status} sizeClass="text-xl" />
-                </td>
-              </tr>
-            ))}
+                  <td className="px-2 py-1">
+                    <a
+                      href={bm.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-16 h-10 overflow-hidden rounded-md"
+                    >
+                      <img
+                        src={bm.card}
+                        alt={`${bm.artist} — ${bm.title}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </a>
+                  </td>
+                  <td>
+                    {bm.artist} - {bm.title}
+                  </td>
+                  <td>
+                    <span>{bm.version}</span>
+                    <span className={`ml-2 font-mono ${color}`}>
+                      {bm.mods || ""}
+                    </span>
+                  </td>
+                  <td>{bm.creator}</td>
+                  <td className={`px-2 py-1 ${color}`}>
+                    {formatLength(bm.total_length)} (
+                    {formatLength(bm.hit_length)})
+                  </td>
+                  <td className={`px-2 py-1 ${isGroup2 ? color : ""}`}>
+                    {bm.cs.toFixed(1)}
+                  </td>
+                  <td className={`px-2 py-1 ${isGroup2 ? color : ""}`}>
+                    {bm.drain.toFixed(1)}
+                  </td>
+                  <td className={`px-2 py-1 ${color}`}>
+                    {bm.accuracy.toFixed(1)}
+                  </td>
+                  <td className={`px-2 py-1 ${color}`}>{bm.ar.toFixed(1)}</td>
+                  <td className={`px-2 py-1 ${color}`}>
+                    {bm.difficulty_rating.toFixed(2)}
+                  </td>
+                  <td className={`px-2 py-1 ${color}`}>{bm.bpm.toFixed(0)}</td>
+                  {/* <td>{bm.playcount.toLocaleString()}</td>
+                  <td className="px-2 py-1">
+                    {new Date(bm.ranked_date).toLocaleDateString()}
+                  </td> */}
+                  <td>{bm.distance.toFixed(2)}</td>
+                  <td className="px-2 py-1">
+                    <StatusIcon status={bm.status} sizeClass="text-xl" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}

@@ -30,6 +30,11 @@ export default function RootLayout({
             >
               Changelog
             </Link>
+
+            <div className="absolute inset-x-0 text-center text-sm text-red-400">
+              note: currently only DT works
+            </div>
+            
             <div className="ml-auto text-xs text-gray-300">
               Maps last updated: May 1, 2025
             </div>

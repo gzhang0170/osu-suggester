@@ -11,7 +11,7 @@ export const metadata = {
             Please check back soon!
           </p>
           <p className="text-sm text-gray-400">
-            Currently adding: DT maps
+            Currently adding: HR maps
           </p>
         </div>
       </main>
