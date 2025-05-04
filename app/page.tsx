@@ -6,7 +6,8 @@ import type { IconBaseProps } from "react-icons/lib";
 
 const HeartIcon = FaHeart as unknown as React.FC<IconBaseProps>;
 const CheckIcon = FaCheck as unknown as React.FC<IconBaseProps>;
-const ChevronIcon = HiOutlineChevronDoubleUp as unknown as React.FC<IconBaseProps>;
+const ChevronIcon =
+  HiOutlineChevronDoubleUp as unknown as React.FC<IconBaseProps>;
 
 type Beatmap = {
   id: number;
@@ -48,14 +49,13 @@ function StatusIcon({ status, sizeClass = "text-2xl" }: StatusIconProps) {
       return <HeartIcon className={`${classes} text-pink-500`} title="Loved" />;
     case "RANKED":
       return (
-        <ChevronIcon
-          className={`${classes} text-cyan-300`}
-          title="Ranked"
-        />
+        <ChevronIcon className={`${classes} text-cyan-300`} title="Ranked" />
       );
     case "QUALIFIED":
     case "APPROVED":
-      return <CheckIcon className={`${classes} text-green-500`} title={status} />;
+      return (
+        <CheckIcon className={`${classes} text-green-500`} title={status} />
+      );
     default:
       return null;
   }
@@ -71,26 +71,35 @@ export default function Home() {
   const [alternativeMaps, setAlternativeMaps] = useState("");
   const [reportText, setReportText] = useState("");
 
+  const [dtHtMode, setDtHtMode] = useState<0 | 1 | 2>(0);
+  const [hrEzMode, setHrEzMode] = useState<0 | 1 | 2>(0);
+
   const handleSearch = async () => {
     setError("");
     setResults(null);
     setShowReport(false);
     setReportText("");
-    setLoading(true); 
+    setLoading(true);
 
     const m = input.match(/(\d+)(?!.*\d)/);
     const id = m ? m[1] : input.trim();
     if (!id) return setError("Enter a beatmap ID or link");
 
+    const dtHtMap = { 0: 0, 1: 64, 2: 256 };
+    const hrEzMap = { 0: 0, 1: 16, 2: 2 };
+    const modValue = dtHtMap[dtHtMode] + hrEzMap[hrEzMode];
+
+    const query = `/api/similar?beatmap_id=${id}&mods=${modValue}`;
+
     try {
-      const res = await fetch(`/api/similar?beatmap_id=${id}`);
+      const res = await fetch(query);
       if (!res.ok) throw new Error(await res.text());
       const json = await res.json();
       setResults(json.similar);
     } catch (e: any) {
       setError(e.message || "Failed to fetch");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -129,9 +138,11 @@ export default function Home() {
           disabled={loading}
         />
         <button
-          className={`px-4 rounded ${loading 
-            ? "bg-gray-400 cursor-not-allowed" 
-            : "bg-blue-600 hover:bg-blue-700"} text-white`}
+          className={`px-4 rounded ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          } text-white`}
           onClick={handleSearch}
           disabled={loading}
         >
@@ -147,7 +158,6 @@ export default function Home() {
         )}
       </div>
 
-    
       {showReport && (
         <div className="w-full max-w-md mt-2">
           <textarea
@@ -173,6 +183,44 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => setDtHtMode((m) => ((m + 1) % 3) as 0 | 1 | 2)}
+          className={`
+            px-3 py-1 rounded border-2
+            transition-colors duration-200
+            ${
+              dtHtMode === 1
+                ? "bg-orange-500/30 border-orange-700 hover:bg-orange-500/50"
+                : dtHtMode === 2
+                ? "bg-blue-500/30 border-blue-700 hover:bg-blue-500/50"
+                : "bg-gray-700/20 border-gray-700 hover:bg-gray-700/40"
+            }
+            text-white
+          `}
+        >
+          {dtHtMode === 1 ? "DT" : dtHtMode === 2 ? "HT" : "DT"}
+        </button>
+
+        <button
+          onClick={() => setHrEzMode((m) => ((m + 1) % 3) as 0 | 1 | 2)}
+          className={`
+            px-3 py-1 rounded border-2
+            transition-colors duration-200
+            ${
+              hrEzMode === 1
+                ? "bg-red-500/30 border-red-700 hover:bg-red-500/50"
+                : hrEzMode === 2
+                ? "bg-green-500/30 border-green-700 hover:bg-green-500/50"
+                : "bg-gray-700/20 border-gray-700 hover:bg-gray-700/40"
+            }
+            text-white
+          `}
+        >
+          {hrEzMode === 1 ? "HR" : hrEzMode === 2 ? "EZ" : "HR"}
+        </button>
+      </div>
 
       {loading && (
         <div className="mt-4">

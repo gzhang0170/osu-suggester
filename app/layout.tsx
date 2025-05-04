@@ -2,6 +2,7 @@ import "./globals.css";
 import { Roboto_Mono } from "next/font/google";
 import InfoBox from "./components/InfoBox";
 import SocialBar from "./components/SocialBar";
+import Link from "next/link";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -18,7 +19,23 @@ export default function RootLayout({
   return (
     <html lang="en" className={robotoMono.className}>
       <body className="relative">
-        {children}
+        <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-40">
+          <nav className="flex items-center h-12 px-4">
+            <Link href="/" className="font-bold text-lg">
+              osu!suggester
+            </Link>
+            <Link
+              href="/changelog"
+              className="ml-4 inline-block px-3 py-1 bg-gray-600 hover:bg-gray-500 rounded-full text-sm text-white transition-colors duration-200"
+            >
+              Changelog
+            </Link>
+            <div className="ml-auto text-xs text-gray-300">
+              Maps last updated: May 1, 2025
+            </div>
+          </nav>
+        </header>
+        <main className="pt-12">{children}</main>
 
         <InfoBox
           infoText={
