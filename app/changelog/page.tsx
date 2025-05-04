@@ -1,6 +1,3 @@
-import { m } from "framer-motion";
-import Link from "next/link";
-
 export const metadata = {
   title: "Changelog",
 };
@@ -13,7 +10,8 @@ const entries = [
       "Added DT/HT and HR/EZ mod toggles to search bar",
       "Added a maintenance page for when the API is down or needs reworking",
       "Added changelog page to record changes to the website and API",
-      "Implemented DT searching and suggestions"
+      "Implemented solo mod searching and suggestions",
+      "Moved API from render.com to DigitalOcean to fix memory issues"
     ],
   },
   {

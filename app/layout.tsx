@@ -34,7 +34,7 @@ export default function RootLayout({
             </div>
 
             <div className="text-center text-sm font-medium text-red-400">
-            ⚠️ note: only DT works ⚠️
+            ⚠️ note: only solo mods work ⚠️
             </div>
 
             {/* <div className="absolute inset-x-0 text-center text-sm text-red-400">

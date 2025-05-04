@@ -2,11 +2,11 @@ import { withRateLimit } from "next-limitr";
 import { NextResponse } from "next/server";
 
 export const GET = withRateLimit({
-  // Maximum 10 requests per minute
-  limit: 10,
-  windowMs: 60_000,
+  // Maximum 2 requests every 10 seconds
+  limit: 2,
+  windowMs: 10_000,
   handler: () =>
-    new NextResponse("Too many requests; maximum is 10 per minute", {
+    new NextResponse("Too many requests; maximum is 2 every 10 seconds", {
       status: 429,
     }),
 })(async (request: Request) => {
@@ -22,7 +22,7 @@ export const GET = withRateLimit({
   }
 
   const flaskRes = await fetch(
-    `https://osu-suggester-api.onrender.com/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
+    `https://osu-suggester-flask-j6aqi.ondigitalocean.app/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
   );
   const data = await flaskRes.json();
   return NextResponse.json(data, { status: flaskRes.status });

@@ -9,7 +9,7 @@ export const POST = withRateLimit({
   limit: 1,
   windowMs: 30_000,
   handler: () =>
-    new NextResponse("Too many requests; maximum is 1 per 30 seconds", {
+    new NextResponse("Too many requests; maximum is 1 every 30 seconds", {
       status: 429,
     }),
 })(async (request: Request) => {

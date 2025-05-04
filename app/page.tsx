@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaHeart, FaCheck } from "react-icons/fa";
 import { HiOutlineChevronDoubleUp } from "react-icons/hi";
 import type { IconBaseProps } from "react-icons/lib";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HeartIcon = FaHeart as unknown as React.FC<IconBaseProps>;
 const CheckIcon = FaCheck as unknown as React.FC<IconBaseProps>;
@@ -38,26 +39,78 @@ function formatLength(sec: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-function getModColor(mods: string) {
-  const hasDT = mods.includes("DT");
-  const hasHT = mods.includes("HT");
-  const hasHR = mods.includes("HR");
-  const hasEZ = mods.includes("EZ");
-
-  const group1 = hasDT || hasHT;
-  const group2 = hasHR || hasEZ;
-
-  if (group1 && group2) {
-    return "text-amber-400";
+function modColor(mod: string): string {
+  switch (mod) {
+    case "DT":
+      return "text-orange-400";
+    case "HT":
+      return "text-blue-400";
+    case "HR":
+      return "text-red-400";
+    case "EZ":
+      return "text-green-400";
+    default:
+      return "";
   }
-  if (group1) {
-    return hasDT ? "text-orange-400" : "text-blue-400";
-  }
-  if (group2) {
-    return hasHR ? "text-red-400" : "text-green-400";
+}
+
+type Col = "length" | "stars" | "bpm" | "ar" | "cs" | "hp" | "accuracy";
+
+function getColumnColor(col: Col, modsList: string[]): string {
+  const [hasDT, hasHR, hasHT, hasEZ] = [
+    modsList.includes("DT"),
+    modsList.includes("HR"),
+    modsList.includes("HT"),
+    modsList.includes("EZ"),
+  ];
+
+  if (modsList.length === 1) {
+    if (hasDT) {
+      if (["length", "stars", "bpm", "ar", "accuracy"].includes(col))
+        return "text-orange-400";
+      return "";
+    }
+    if (hasHT) {
+      if (["length", "stars", "bpm", "ar", "accuracy"].includes(col))
+        return "text-blue-400";
+      return "";
+    }
+    if (hasHR) {
+      if (["cs", "hp", "stars", "ar", "accuracy"].includes(col))
+        return "text-red-400";
+      return "";
+    }
+    if (hasEZ) {
+      if (["cs", "hp", "stars", "ar", "accuracy"].includes(col))
+        return "text-green-400";
+      return "";
+    }
   }
 
-  return "text-white";
+  if (modsList.length === 2) {
+    if (hasDT && hasHR) {
+      if (["length", "bpm"].includes(col)) return "text-orange-400";
+      if (["cs", "hp"].includes(col)) return "text-red-400";
+      if (["stars", "ar", "accuracy"].includes(col)) return "text-red-500";
+    }
+    if (hasDT && hasEZ) {
+      if (["length", "bpm"].includes(col)) return "text-orange-400";
+      if (["cs", "hp"].includes(col)) return "text-green-400";
+      if (["stars", "ar", "accuracy"].includes(col)) return "text-amber-500";
+    }
+    if (hasHT && hasHR) {
+      if (["length", "bpm"].includes(col)) return "text-blue-400";
+      if (["cs", "hp"].includes(col)) return "text-red-400";
+      if (["stars", "ar", "accuracy"].includes(col)) return "text-blue-300";
+    }
+    if (hasHT && hasEZ) {
+      if (["length", "bpm"].includes(col)) return "text-blue-400";
+      if (["cs", "hp"].includes(col)) return "text-green-400";
+      if (["stars", "ar", "accuracy"].includes(col)) return "text-green-300";
+    }
+  }
+
+  return "";
 }
 
 type StatusIconProps = {
@@ -83,6 +136,18 @@ function StatusIcon({ status, sizeClass = "text-2xl" }: StatusIconProps) {
       return null;
   }
 }
+
+const rowVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.3,
+    },
+  }),
+};
 
 export default function Home() {
   const [input, setInput] = useState("");
@@ -283,13 +348,19 @@ export default function Home() {
               <th className="px-2 py-1">Status</th>
             </tr>
           </thead>
-          <tbody>
-            {results?.map((bm) => {
-              const color = getModColor(bm.mods);
-              const isGroup2 = bm.mods.includes("HR") || bm.mods.includes("EZ");
-              return (
-                <tr key={bm.id} className="border-t">
-                  {/* <td>
+          <AnimatePresence>
+            <motion.tbody initial="hidden" animate="visible" exit="hidden">
+              {results?.map((bm, i) => {
+                const modsList = bm.mods ? bm.mods.split(",") : [];
+                return (
+                  <motion.tr
+                    key={bm.id}
+                    custom={i}
+                    variants={rowVariants}
+                    exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
+                    className="border-b border-gray-700 last:border-b-0"
+                  >
+                    {/* <td>
                   <a
                     href={bm.url}
                     target="_blank"
@@ -299,60 +370,95 @@ export default function Home() {
                     {bm.id}
                   </a>
                 </td> */}
-                  <td className="px-2 py-1">
-                    <a
-                      href={bm.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-16 h-10 overflow-hidden rounded-md"
+                    <td className="px-2 py-1">
+                      <a
+                        href={bm.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-16 h-10 overflow-hidden rounded-md"
+                      >
+                        <img
+                          src={bm.card}
+                          alt={`${bm.artist} — ${bm.title}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </a>
+                    </td>
+                    <td>
+                      {bm.artist} - {bm.title}
+                    </td>
+
+                    <td className="px-2 py-1">
+                      <span>{bm.version}</span>
+                      {modsList.map((m) => (
+                        <span
+                          key={m}
+                          className={`ml-2 font-mono ${modColor(m)}`}
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </td>
+
+                    <td>{bm.creator}</td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor(
+                        "length",
+                        modsList
+                      )}`}
                     >
-                      <img
-                        src={bm.card}
-                        alt={`${bm.artist} — ${bm.title}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </a>
-                  </td>
-                  <td>
-                    {bm.artist} - {bm.title}
-                  </td>
-                  <td>
-                    <span>{bm.version}</span>
-                    <span className={`ml-2 font-mono ${color}`}>
-                      {bm.mods || ""}
-                    </span>
-                  </td>
-                  <td>{bm.creator}</td>
-                  <td className={`px-2 py-1 ${color}`}>
-                    {formatLength(bm.total_length)} (
-                    {formatLength(bm.hit_length)})
-                  </td>
-                  <td className={`px-2 py-1 ${isGroup2 ? color : ""}`}>
-                    {bm.cs.toFixed(1)}
-                  </td>
-                  <td className={`px-2 py-1 ${isGroup2 ? color : ""}`}>
-                    {bm.drain.toFixed(1)}
-                  </td>
-                  <td className={`px-2 py-1 ${color}`}>
-                    {bm.accuracy.toFixed(1)}
-                  </td>
-                  <td className={`px-2 py-1 ${color}`}>{bm.ar.toFixed(1)}</td>
-                  <td className={`px-2 py-1 ${color}`}>
-                    {bm.difficulty_rating.toFixed(2)}
-                  </td>
-                  <td className={`px-2 py-1 ${color}`}>{bm.bpm.toFixed(0)}</td>
-                  {/* <td>{bm.playcount.toLocaleString()}</td>
+                      {formatLength(bm.total_length)} (
+                      {formatLength(bm.hit_length)})
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor("cs", modsList)}`}
+                    >
+                      {bm.cs.toFixed(1)}
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor("hp", modsList)}`}
+                    >
+                      {bm.drain.toFixed(1)}
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor(
+                        "accuracy",
+                        modsList
+                      )}`}
+                    >
+                      {bm.accuracy.toFixed(1)}
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor("ar", modsList)}`}
+                    >
+                      {bm.ar.toFixed(1)}
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor(
+                        "stars",
+                        modsList
+                      )}`}
+                    >
+                      {bm.difficulty_rating.toFixed(2)}
+                    </td>
+                    <td
+                      className={`px-2 py-1 ${getColumnColor("bpm", modsList)}`}
+                    >
+                      {bm.bpm.toFixed(0)}
+                    </td>
+                    {/* <td>{bm.playcount.toLocaleString()}</td>
                   <td className="px-2 py-1">
                     {new Date(bm.ranked_date).toLocaleDateString()}
                   </td> */}
-                  <td>{bm.distance.toFixed(2)}</td>
-                  <td className="px-2 py-1">
-                    <StatusIcon status={bm.status} sizeClass="text-xl" />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+                    <td>{bm.distance.toFixed(2)}</td>
+                    <td className="px-2 py-1">
+                      <StatusIcon status={bm.status} sizeClass="text-xl" />
+                    </td>
+                  </motion.tr>
+                );
+              })}
+            </motion.tbody>
+          </AnimatePresence>
         </table>
       )}
     </main>
