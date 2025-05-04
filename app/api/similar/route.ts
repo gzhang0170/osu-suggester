@@ -1,6 +1,8 @@
 import { withRateLimit } from "next-limitr";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 30;
+
 export const GET = withRateLimit({
   // Maximum 2 requests every 10 seconds
   limit: 2,
