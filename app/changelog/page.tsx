@@ -8,6 +8,8 @@ const entries = [
     changes: [
       "Implemented mod combinations for searching and suggestions",
       "Added bug report form and info pop up on start",
+      "Added scaling for extremely high CS and AR to more correctly weigh maps like precision and AR11",
+      "Reduced the overhead and memory usage of the similarity calculations (from 15 to ~5 seconds)"
     ],
   },
   {
