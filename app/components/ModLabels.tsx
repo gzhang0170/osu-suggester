@@ -12,7 +12,7 @@ interface ModLabelsProps {
 }
 
 export default function ModLabels({ mods }: ModLabelsProps) {
-  if (!mods) return;
+  if (!mods) return <span className="ml-2 text-gray-400"></span>;
   const list = mods.split(",").filter((m) => m);
   return (
     <>
