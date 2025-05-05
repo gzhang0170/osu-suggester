@@ -24,7 +24,7 @@ export const GET = withRateLimit({
   }
 
   const flaskRes = await fetch(
-    `https://osu-suggester-flask-j6aqi.ondigitalocean.app/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
+    `https://osu-suggester-api-d8ohl.ondigitalocean.app/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
   );
   const data = await flaskRes.json();
   return NextResponse.json(data, { status: flaskRes.status });

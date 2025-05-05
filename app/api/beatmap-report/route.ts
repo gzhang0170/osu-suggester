@@ -23,7 +23,7 @@ export const POST = withRateLimit({
       };
 
     await sql`
-        INSERT INTO reports (beatmap_id, suggestions, alternative_maps, comment, created_at)
+        INSERT INTO beatmap_reports (beatmap_id, suggestions, alternative_maps, comment, created_at)
         VALUES (
           ${beatmap_id},
           ${JSON.stringify(suggestions)}::jsonb,

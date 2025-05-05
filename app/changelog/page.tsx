@@ -4,6 +4,13 @@ export const metadata = {
 
 const entries = [
   {
+    date: "May 4, 2025",
+    changes: [
+      "Implemented mod combinations for searching and suggestions",
+      "Added bug report form and info pop up on start",
+    ],
+  },
+  {
     date: "May 3, 2025",
     changes: [
       "Implemented search protection and loading when searching a map",
