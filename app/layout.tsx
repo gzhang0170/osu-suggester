@@ -17,11 +17,11 @@ export default function RootLayout({
     <html lang="en" className={robotoMono.className}>
       <body className="relative">
         <Header />
+        <Analytics />
+        <SpeedInsights />
 
         <main className="pt-12">
           {children}
-          <Analytics />
-          <SpeedInsights />
         </main>
 
         <InfoBox
