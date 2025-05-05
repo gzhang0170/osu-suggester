@@ -224,6 +224,10 @@ export default function Home() {
           features may be incomplete or change without notice.
         </p>
         <p>
+         <strong>Important:</strong> The map searched must have a leaderboard before <strong>May 1, 2025, </strong>
+         and it will only return maps that have a leaderboard before <strong>May 1, 2025.</strong>
+        </p>
+        <p>
           Please note that searches may take up to 15 seconds to load.
           Hover over the info box in the bottom left or click on
           the changelog for more information.

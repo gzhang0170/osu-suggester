@@ -42,7 +42,8 @@ export default function RootLayout({
             "• Gimmickier maps (ex. low AR, precision)\n" +
             "• Differentiating comfortable aim (sharp angles) from uncomfortable aim (wide angles)\n" +
             "• Maps below 4.0 stars and above 7.5 stars\n" +
-            "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n\n" +
+            "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n" +
+            "• Tends to overweight AR10+, especially HRDT + AR11\n\n" +
             "Check back for updates! I'm currently working on a better UI, this is currently just a skeleton layout " +
             "that I've deployed to get some playtesting with.\n\n" +
             "Feel free to submit reports of inaccuracies with the report button after searching, " +
