@@ -4,12 +4,19 @@ export const metadata = {
 
 const entries = [
   {
+    date: "May 5, 2025",
+    changes: [
+      "Further reduced the memory usage of the similarity algorithm",
+    ],
+  },
+  {
     date: "May 4, 2025",
     changes: [
       "Implemented mod combinations for searching and suggestions",
       "Added bug report form and info pop up on start",
       "Added scaling for extremely high CS and AR to more correctly weigh maps like precision and AR11",
-      "Reduced the overhead and memory usage of the similarity calculations (from 15 to ~5 seconds)"
+      "Reduced the overhead and memory usage of the similarity calculations (from 15 to ~5 seconds)",
+      "Further added scaling to other attributes associated with the similarity algorithm"
     ],
   },
   {
