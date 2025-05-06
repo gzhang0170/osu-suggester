@@ -4,6 +4,7 @@ import ResultsTable from "./ResultsTable";
 import { Beatmap } from "./BeatmapRow";
 import { useState } from "react";
 import Popup from "./Popup";
+import ExcludeFilter from "./ExcludeFilter";
 
 export default function HomeClient() {
   const [input, setInput] = useState("");
@@ -17,6 +18,7 @@ export default function HomeClient() {
 
   const [dtHtMode, setDtHtMode] = useState<0 | 1 | 2>(0);
   const [hrEzMode, setHrEzMode] = useState<0 | 1 | 2>(0);
+  const [excludeBits, setExcludeBits] = useState<number[]>([]);
 
   const handleSearch = async () => {
     setError("");
@@ -33,8 +35,9 @@ export default function HomeClient() {
     const dtHtMap = { 0: 0, 1: 64, 2: 256 };
     const hrEzMap = { 0: 0, 1: 16, 2: 2 };
     const modValue = dtHtMap[dtHtMode] + hrEzMap[hrEzMode];
+    const excludeMods = excludeBits.join(",")
 
-    const query = `/api/similar?beatmap_id=${id}&mods=${modValue}`;
+    const query = `/api/similar?beatmap_id=${id}&mods=${modValue}&exclude=${excludeMods}`;
 
     try {
       const res = await fetch(query);
@@ -184,6 +187,8 @@ export default function HomeClient() {
             {dtHtMode === 1 ? "DT" : dtHtMode === 2 ? "HT" : "DT"}
           </button>
         </div>
+        
+        <ExcludeFilter onChange={setExcludeBits} />
 
         {loading && (
           <div className="mt-4">

@@ -7,6 +7,7 @@ const entries = [
     date: "May 5, 2025",
     changes: [
       "Further reduced the memory usage of the similarity algorithm",
+      "Added mod filtering for suggestions",
     ],
   },
   {

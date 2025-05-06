@@ -42,7 +42,7 @@ export default function ResultsTable({ results }: ResultsTableProps) {
         <motion.tbody initial="hidden" animate="visible" exit="hidden">
           {results.map((bm, i) => (
             <BeatmapRow
-              key={bm.id}
+              key={`${bm.id}-${bm.mods}`}
               bm={bm}
               index={i}
               rowVariants={rowVariants}

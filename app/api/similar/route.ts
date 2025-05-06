@@ -23,8 +23,10 @@ export const GET = withRateLimit({
     return NextResponse.json({ error: "Missing mods" }, { status: 400 });
   }
 
+  const excludeMods = searchParams.get("exclude");
+
   const flaskRes = await fetch(
-    `${process.env.API_URL}/api/similar?beatmap_id=${beatmapId}&mods=${mods}`
+    `${process.env.API_URL}/api/similar?beatmap_id=${beatmapId}&mods=${mods}&exclude=${excludeMods}`
   );
   const data = await flaskRes.json();
   return NextResponse.json(data, { status: flaskRes.status });

@@ -44,7 +44,7 @@ export default function BeatmapRow({
 
   return (
     <motion.tr
-      key={bm.id}
+      key={`${bm.id}-${bm.mods}`}
       custom={index}
       variants={rowVariants}
       exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
