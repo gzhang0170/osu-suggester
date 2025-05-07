@@ -88,7 +88,19 @@ export default function HomeClient() {
           <strong>May 1, 2025.</strong>
         </p>
         <p>
-          Please note that searches may take up to 15 seconds to load. Hover
+          Please note that these suggestions <strong>DO NOT</strong> consider pp
+          or "farmability" in its calculations at all! It's only supposed to
+          recommend maps that it thinks is similar, which may or may not be the
+          same level of farm as the searched map.
+        </p>
+        <p>
+          Please use the <strong>report button</strong> after searching the beatmap
+          if you think the recommendations are wrong, so I can see and try to fix it!
+          Also, if there are any bugs with the website, use the report button in the
+          top left to report it.
+        </p>
+        <p>
+          Note that searches may take up to a few seconds to load. Hover
           over the info box in the bottom left or click on the changelog for
           more information.
         </p>

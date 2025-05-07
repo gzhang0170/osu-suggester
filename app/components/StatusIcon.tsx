@@ -2,14 +2,23 @@
 
 import { FaHeart, FaCheck } from "react-icons/fa";
 import { HiOutlineChevronDoubleUp } from "react-icons/hi";
+import { FaQuestion } from "react-icons/fa6";
 import type { IconBaseProps } from "react-icons/lib";
 
 const HeartIcon = FaHeart as unknown as React.FC<IconBaseProps>;
 const CheckIcon = FaCheck as unknown as React.FC<IconBaseProps>;
 const ChevronIcon =
   HiOutlineChevronDoubleUp as unknown as React.FC<IconBaseProps>;
+const QuestionIcon = FaQuestion as unknown as React.FC<IconBaseProps>;
 
-export type Status = "LOVED" | "RANKED" | "QUALIFIED" | "APPROVED";
+export type Status =
+  | "LOVED"
+  | "RANKED"
+  | "QUALIFIED"
+  | "APPROVED"
+  | "PENDING"
+  | "WIP"
+  | "GRAVEYARD";
 
 type StatusIconProps = {
   status: string;
@@ -32,6 +41,12 @@ export default function StatusIcon({
     case "APPROVED":
       return (
         <CheckIcon className={`${classes} text-green-500`} title={status} />
+      );
+    case "PENDING":
+    case "WIP":
+    case "GRAVEYARD":
+      return (
+        <QuestionIcon className={`${classes} text-white`} title={status} />
       );
     default:
       return null;

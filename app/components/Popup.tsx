@@ -21,7 +21,7 @@ export default function Popup({ title = "Popup", children }: PopupProps) {
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg mx-4 shadow-lg"
+            className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl mx-4 shadow-lg"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
