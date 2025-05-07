@@ -66,7 +66,7 @@ export default function SocialBar() {
               <Icon className="w-full h-full" />
             </button>
           )}
-          {/* tooltip */}
+          
           <div
             className="
                   pointer-events-none

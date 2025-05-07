@@ -108,10 +108,10 @@ export default function HomeClient() {
           </button>
           {results && (
             <button
-              className="bg-gray-600 text-white px-4 rounded"
+              className="bg-red-600 text-white px-4 rounded"
               onClick={() => setShowReport((v) => !v)}
             >
-              {showReport ? "Cancel" : "Report"}
+              Report
             </button>
           )}
         </div>

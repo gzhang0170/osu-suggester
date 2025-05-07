@@ -4,9 +4,17 @@ export const metadata = {
 
 const entries = [
   {
+    date: "May 6, 2025",
+    changes: [
+      "Moved suggestion report to pop out in its own window (similarly to bug report)",
+      "Fixed errors in the API returning incorrect CS/AR values",
+      "Increased harshness of similarity curve but softened weights of the similarity algorithm",
+    ],
+  },
+  {
     date: "May 5, 2025",
     changes: [
-      "Further reduced the memory usage of the similarity algorithm",
+      "Further reduced the overhead memory usage of the similarity algorithm (from 5 to ~3 seconds)",
       "Added mod filtering for suggestions",
     ],
   },

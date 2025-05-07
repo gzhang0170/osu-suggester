@@ -81,7 +81,7 @@ export default function SuggestionReport({
                   />
                 </div>
                 <p className="text-green-500">
-                  Thanks! Your report was submitted.
+                  Thanks! Your suggestion report was submitted.
                 </p>
                 <div className="flex justify-end mt-4">
                   <button
