@@ -36,7 +36,7 @@ const entries = [
       "Added a maintenance page for when the API is down or needs reworking",
       "Added changelog page to record changes to the website and API",
       "Implemented solo mod searching and suggestions",
-      "Moved API from render.com to DigitalOcean to fix memory issues"
+      "Moved platform of API to fix memory issues"
     ],
   },
   {
