@@ -3,6 +3,7 @@
 import ResultsTable from "./ResultsTable";
 import { Beatmap } from "./BeatmapRow";
 import { useState } from "react";
+import SuggestionReport from "./SuggestionReport";
 import Popup from "./Popup";
 import ExcludeFilter from "./ExcludeFilter";
 
@@ -51,28 +52,7 @@ export default function HomeClient() {
     }
   };
 
-  const submitReport = async () => {
-    if (!results) return;
-    try {
-      const res = await fetch("/api/beatmap-report", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          beatmap_id: input.match(/(\d+)(?!.*\d)/)?.[1] ?? input.trim(),
-          suggestions: results,
-          comment: reportText,
-          alternative_maps: alternativeMaps,
-        }),
-      });
-      if (!res.ok) throw new Error(await res.text());
-      alert("Report submitted—thank you!");
-      setShowReport(false);
-      setReportText("");
-      setAlternativeMaps("");
-    } catch (e: any) {
-      alert("Error submitting report: " + e.message);
-    }
-  };
+  const beatmapId = input.match(/(\d+)(?!.*\d)/)?.[1] ?? input.trim();
 
   return (
     <>
@@ -136,31 +116,12 @@ export default function HomeClient() {
           )}
         </div>
 
-        {showReport && (
-          <div className="w-full max-w-md mt-2">
-            <textarea
-              className="w-full border rounded px-3 py-2 text-black"
-              rows={4}
-              placeholder="What's wrong with these suggestions? (too much aim, speed, streams, etc.)"
-              value={reportText}
-              onChange={(e) => setReportText(e.target.value)}
-            />
-            <input
-              type="text"
-              className="w-full border rounded px-3 py-2 text-black"
-              placeholder="Example of better map(s) (ID or URL)"
-              value={alternativeMaps}
-              onChange={(e) => setAlternativeMaps(e.target.value)}
-            />
-            <button
-              className="mt-2 bg-red-600 text-white px-4 py-2 rounded"
-              onClick={submitReport}
-              disabled={!reportText.trim()}
-            >
-              Submit Report
-            </button>
-          </div>
-        )}
+        <SuggestionReport
+          isOpen={showReport}
+          onClose={() => setShowReport(false)}
+          beatmapId={beatmapId}
+          suggestions={results || []}
+        />
 
         <div className="flex gap-2">
           <button
