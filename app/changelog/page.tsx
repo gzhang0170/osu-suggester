@@ -36,7 +36,8 @@ const entries = [
       "Added a maintenance page for when the API is down or needs reworking",
       "Added changelog page to record changes to the website and API",
       "Implemented solo mod searching and suggestions",
-      "Moved platform of API to fix memory issues"
+      "Moved platform of API to fix memory issues",
+      "Further expanded search to 50 beatmaps"
     ],
   },
   {
@@ -46,7 +47,7 @@ const entries = [
       "Added artist and song metadata",
       "Added report button with feedback for alternative maps",
       "Added beatmap card and status",
-      "Implemented rate limiter (10 requests per minute for similarity search, 1 report per 30 seconds)",
+      "Implemented rate limiter (2 requests every 10 seconds for similarity search, 1 report every 30 seconds)",
       "Replaced database implementation with osu!api calls using ossapi (allowed for more metadata options)",
       "Increased the weight of AR and slightly changed weights of other parameters in the similarity algorithm"
     ],
@@ -67,7 +68,7 @@ const entries = [
   {
     date: "April 24, 2025",
     changes: [
-      "Moved backend API from Flask to render.com",
+      "Created backend API for similarity algorithm",
       "Added clickable links for each beatmap ID",
       "Increased weight of speed/object ratio for more accurate stream vs burst map distinction"
     ],

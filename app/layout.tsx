@@ -26,7 +26,8 @@ export default function RootLayout({
 
         <InfoBox
           infoText={
-            "Similarity is determined based on each map's BPM, attributes, and aim and speed stats. " +
+            "Similarity is determined based on each map's BPM, attributes, " +
+            "aim and speed stats, and its objects (hitcircles and sliders). " +
             "The scale is about as follows:\n" +
             "• 95-100: Extremely similar\n" +
             "• 90-95: Very similar\n" +

@@ -36,7 +36,7 @@ export default function HomeClient() {
     const dtHtMap = { 0: 0, 1: 64, 2: 256 };
     const hrEzMap = { 0: 0, 1: 16, 2: 2 };
     const modValue = dtHtMap[dtHtMode] + hrEzMap[hrEzMode];
-    const excludeMods = excludeBits.join(",")
+    const excludeMods = excludeBits.join(",");
 
     const query = `/api/similar?beatmap_id=${id}&mods=${modValue}&exclude=${excludeMods}`;
 
@@ -64,7 +64,7 @@ export default function HomeClient() {
         <p>
           <strong>Important:</strong> The map searched must have a leaderboard
           before <strong>May 1, 2025, </strong>
-          and it will only return maps that have a leaderboard before{" "}
+          and it will only return maps that have had a leaderboard before{" "}
           <strong>May 1, 2025.</strong>
         </p>
         <p>
@@ -74,15 +74,15 @@ export default function HomeClient() {
           same level of farm as the searched map.
         </p>
         <p>
-          Please use the <strong>report button</strong> after searching the beatmap
-          if you think the recommendations are wrong, so I can see and try to fix it!
-          Also, if there are any bugs with the website, use the report button in the
-          top left to report it.
+          Please use the <strong>report button after searching</strong>
+          if you think the recommendations are wrong, so I can see and try to
+          fix it! Also, if there are any bugs with the website, use the{" "}
+          <strong>report button in the top left</strong> to report it.
         </p>
         <p>
-          Note that searches may take up to a few seconds to load. Hover
-          over the info box in the bottom left or click on the changelog for
-          more information.
+          Note that searches may take up to a few seconds to load. Hover over
+          the info box in the bottom left or click on the changelog for more
+          information.
         </p>
       </Popup>
       <main className="flex flex-col items-center gap-4 p-6 pb-16">
@@ -160,7 +160,7 @@ export default function HomeClient() {
             {dtHtMode === 1 ? "DT" : dtHtMode === 2 ? "HT" : "DT"}
           </button>
         </div>
-        
+
         <ExcludeFilter onChange={setExcludeBits} />
 
         {loading && (
