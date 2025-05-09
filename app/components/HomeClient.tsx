@@ -87,34 +87,43 @@ export default function HomeClient() {
       </Popup>
       <main className="flex flex-col items-center gap-4 p-6 pb-16">
         <h1 className="text-2xl font-bold">osu!suggester</h1>
-        <div className="flex gap-2">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+          className="flex gap-2 w-full max-w-md"
+        >
           <input
-            className="border rounded px-3 py-1 w-72 text-black"
+            className="border rounded px-3 py-1 flex-1 text-black"
             placeholder="beatmap ID or link"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={loading}
           />
+
           <button
+            type="submit"
             className={`px-4 rounded ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
             } text-white`}
-            onClick={handleSearch}
             disabled={loading}
           >
             {loading ? "Searching…" : "Search"}
           </button>
+
           {results && (
             <button
-              className="bg-red-600 text-white px-4 rounded"
+              type="button"
+              className="bg-red-600 text-white px-4 rounded hover:bg-red-700"
               onClick={() => setShowReport((v) => !v)}
             >
-              Report
+              {showReport ? "Cancel" : "Report"}
             </button>
           )}
-        </div>
+        </form>
 
         <SuggestionReport
           isOpen={showReport}
