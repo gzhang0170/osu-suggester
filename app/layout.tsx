@@ -15,6 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={robotoMono.className}>
+      <head>
+        <link rel="icon" href="/icon.ico" sizes="any" />
+      </head>
       <body className="relative">
         <Header />
         <Analytics />
