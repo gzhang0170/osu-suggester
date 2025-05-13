@@ -34,6 +34,7 @@ export default function RootLayout({
           infoText={
             "Similarity is determined based on each map's BPM, attributes, " +
             "aim and speed stats, and its objects (hitcircles and sliders). " +
+            "Please note beatmap length is not considered.\n\n" +
             "The scale is about as follows:\n" +
             "• 95-100: Extremely similar\n" +
             "• 90-95: Very similar\n" +
@@ -51,9 +52,8 @@ export default function RootLayout({
             "• Similarly, between same-spacing streams and accel-decel streams\n" +
             "• Maps below 3.0 stars and above 7.5 stars\n" +
             "• Maps with primary BPMs that aren't 1/2, 1/4, etc. (ex. 1/3, 1/6)\n\n" +
-            "Check back for updates! I'm currently working on a better UI, this is currently just a skeleton layout " +
-            "that I've deployed to get some playtesting with.\n\n" +
-            "Feel free to submit reports of inaccuracies with the report button after searching, " +
+            "Check back for updates, and feel free to submit reports of inaccuracies " +
+            "with the report button after searching, " +
             "or reach out to me via Discord, Twitter, or osu!"
           }
         />
