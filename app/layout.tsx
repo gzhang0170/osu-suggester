@@ -16,6 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={robotoMono.className}>
       <head>
+        <title>osu!suggester</title>
+        <meta name="description" content="Find similar osu! beatmaps" />
         <link rel="icon" href="/icon.ico" sizes="any" />
         <meta name="google-site-verification" content="gDtpYQsYd-uhtmbduFBTgX9YnueVghPEsHXKnt2KUXU" />
       </head>
