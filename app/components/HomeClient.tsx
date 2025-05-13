@@ -74,7 +74,7 @@ export default function HomeClient() {
           same level of farm as the searched map.
         </p>
         <p>
-          Please use the <strong>report button after searching</strong>
+          Please use the <strong>report button after searching </strong>
           if you think the recommendations are wrong, so I can see and try to
           fix it! Also, if there are any bugs with the website, use the{" "}
           <strong>report button in the top left</strong> to report it.
