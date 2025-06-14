@@ -16,8 +16,8 @@ export default function SocialBar() {
   const twitterHandle = "@atomicknighto";
   const osuUrl = "https://osu.ppy.sh/users/10937890";
   const osuUsername = "yukinasimp";
-  const githubUrl = "";
-  const githubHandle = "coming soon!";
+  const githubUrl = "https://github.com/gzhang0170/osu-suggester";
+  const githubHandle = "gzhang0170";
 
   const [copied, setCopied] = useState(false);
 
